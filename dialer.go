@@ -21,10 +21,14 @@ type OSDialer struct {
 
 // NewOSDialer creates a new OSDialer
 // local: local address for making the connection
-func NewOSDialer(local net.Addr) (s *OSDialer) {
-	dlr := &net.Dialer{LocalAddr: local}
-	s = &OSDialer{Dlr: dlr}
+func NewOSDialer() (s *OSDialer) {
+	s = &OSDialer{Dlr: new(net.Dialer)}
 	return
+}
+
+// SetLocal sets the local address for dialing
+func (s *OSDialer) SetLocal(a net.Addr) {
+	s.Dlr.LocalAddr = a
 }
 
 // Dial dials using the supplied net.IP as local
